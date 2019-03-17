@@ -21,7 +21,22 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="algorithms\thompsons_constructor.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="algorithms\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="app.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="models\nfa.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="models\state.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="models\__init__.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="samples_ian\sample_runner.py" />
@@ -36,6 +51,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="models\" />
+    <Folder Include="algorithms\" />
     <Folder Include="samples_ian\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
