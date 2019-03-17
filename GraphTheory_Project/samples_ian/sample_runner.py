@@ -1,14 +1,21 @@
 import thompsons_constructor
 import shunting_yard
 
-print(thompsons_constructor.compile("ab.cd.|"))
-print(thompsons_constructor.compile("aa.*"))
+def run():
 
-print(shunting_yard.shunt("(a.b)|(c*.d)"))
-print(shunting_yard.shunt("(a|b).(c*.d)"))
+    print(thompsons_constructor.compile("ab.cd.|"))
+    print(thompsons_constructor.compile("aa.*"))
 
-infixes = ["a.b.c", "a.(b|d).c*", "(a.(b|d))*", "a.(b.b)*.c"]
-strings = ["", "abc", "abbc", "abcc", "abad", "abbbc"]
+    print(shunting_yard.shunt("(a.b)|(c*.d)"))
+    print(shunting_yard.shunt("(a|b).(c*.d)"))
+
+    infixes = ["a.b.c", "a.(b|d).c*", "(a.(b|d))*", "a.(b.b)*.c"]
+    strings = ["", "abc", "abbc", "abcc", "abad", "abbbc"]
+
+    for i in infixes:
+        for s in strings:
+            print match(i, s), i, s
+
 
 def followEedges(state):
 	"""Returns the set of states that can be reached from
@@ -60,7 +67,3 @@ def match(infix, string):
 		nextStates = set()
 	# return state is in set of current states
 	return (nfa.accept in currentStates)
-
-for i in infixes:
-	for s in strings:
-		print match(i, s), i, s

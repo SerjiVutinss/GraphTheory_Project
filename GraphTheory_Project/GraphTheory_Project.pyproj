@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>e784f67c-6312-4777-ae18-06ce245428fe</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>GraphTheory_Project.py</StartupFile>
+    <StartupFile>app.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -21,13 +21,22 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="GraphTheory_Project.py" />
-    <Compile Include="shunting_yard.py">
+    <Compile Include="app.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="thompsons_constructor.py">
+    <Compile Include="samples_ian\sample_runner.py" />
+    <Compile Include="samples_ian\shunting_yard.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="samples_ian\thompsons_constructor.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="samples_ian\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="samples_ian\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
