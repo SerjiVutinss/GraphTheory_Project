@@ -1,4 +1,6 @@
 # Shunting Yard Algorithm
+
+# Written by Ian McLoughlin - https://web.microsoftstream.com/video/cfc9f4a2-d34f-4cde-afba-063797493a90
 def shunt(infix):
 	
 	specials = {'*': 50, '.': 40, '|': 30}

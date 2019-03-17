@@ -1,5 +1,7 @@
 # Thompson's Algorithm
 
+# Written by Ian McLoughlin https://web.microsoftstream.com/video/5e2a482a-b1c9-48a3-b183-19eb8362abc9
+
 # use None for a label representing 'E' arrows
 class state:
 	label = None
