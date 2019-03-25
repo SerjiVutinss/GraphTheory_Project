@@ -5,4 +5,7 @@ class State:
     e1 = None
     e2 = None
 
+    def __hash__(self):
+        return id(self)
+
 

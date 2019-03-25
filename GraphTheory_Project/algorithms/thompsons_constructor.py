@@ -5,18 +5,25 @@ regex_operators = {'|': 10, '.': 20, '*': 30}
 class ThompsonsConstructor():
 
     postfix = None
-    allStates = None
+    nfaSet = None
     nfaStack = None
+
+    stateSet = None
+
+    solutionNfa = None
+
+    edgeSet = None
 
     def __init__(self, postfix):
         self.postfix = postfix
         self.buildNfaFromPostFix()
+        self.followEedges()
 
     def buildNfaFromPostFix(self):
         """Takes a postfix reg ex pattern as a parameter and returns the NFA"""
 
         # keep track of all states in this set
-        self.allStates = set()
+        self.nfaSet = set()
         # create a stack for use within the algorithm,
         # the last element remaining on the stack once the algorithm
         # completes will be the 'solution' NFA
@@ -40,11 +47,13 @@ class ThompsonsConstructor():
                 accept = State()
                 initial.label = c # label is char
                 initial.edge1 = accept # point to the accept state
-
+                newNfa = Nfa(initial, accept)
+                self.nfaSet.add(newNfa)
 			    # create a new nfa using the two states and push to stack
-                self.nfaStack.append(Nfa(initial, accept))
+                self.nfaStack.append(newNfa)
 
-        return self.nfaStack.pop()
+
+        self.solutionNfa = self.nfaStack.pop()
 
     def handleConcat(self):
         # It can be assumed that there are at least, two NFAs
@@ -55,9 +64,12 @@ class ThompsonsConstructor():
         # join the accept of the first NFA to the initial
         # of the second and create a new NFA
         n1.acceptState.e1 = n2.initialState
+
+
         newNfa = Nfa(n1.initial, n2.accept)
         # push this new NFA to the stack
         self.nfaStack.append(newNfa)
+        self.nfaSet.add(newNfa)
 
     def handleOr(self):
 		# It can be assumed that there are at least, two NFAs
@@ -74,7 +86,9 @@ class ThompsonsConstructor():
         n1.acceptState.e1 = accept
         n2.acceptState.e1 = accept
         # push a new nfa to the stack, using accept and initial states
-        self.nfaStack.append(Nfa(initial, accept))
+        newNfa = Nfa(initial, accept)
+        self.nfaSet.add(newNfa)   
+        self.nfaStack.append(newNfa)
 
     def handleStar(self):
         # pop single NFA since this has the least order of
@@ -92,8 +106,36 @@ class ThompsonsConstructor():
         n1.acceptState.e1 = n1.initialState
         n1.acceptState.e2 = accept
         # push new nfa to stack
-        self.nfaStack.append(Nfa(initial, accept))
+        newNfa = Nfa(initial, accept)
+        self.nfaSet.add(newNfa)			    
+        self.nfaStack.append(newNfa)
 
+    def followEedges(self):
+        """Returns the set of states that can be reached from
+		the state, following the arrows"""
 
+        # create a new set with state as its only member
+        self.stateSet = {}
+        print len(self.nfaSet)
+        for n in self.nfaSet:
+            self.followEdge(n.initialState)
+            self.followEdge(n.acceptState)
 
+        print len(self.stateSet)
+        for n in self.stateSet:
+            print n.label
 
+    def followEdge(self, state):
+        """Follw edges recursively"""
+        if(state.e1 != None):
+            self.stateSet[state] = state.e1
+            self.followEdge(state.e1)
+        if(state.e2 != None):
+            self.stateSet[state] = state.e2
+            self.followEdge(state.e2)
+        if(state.e1 != None):
+            self.stateSet[state] = state.e1
+            self.followEdge(state.e1)
+        if(state.e2 != None):
+            self.stateSet[state] = state.e2
+            self.followEdge(state.e2)

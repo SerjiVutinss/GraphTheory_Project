@@ -21,6 +21,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="algorithms\shunting_yard.py" />
     <Compile Include="algorithms\thompsons_constructor.py">
       <SubType>Code</SubType>
     </Compile>
