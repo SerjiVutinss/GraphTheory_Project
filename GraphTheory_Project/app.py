@@ -1,11 +1,10 @@
-from models import State, Nfa
 from algorithms import regex_matcher as re_matcher
 
 def main():
     print "Starting..."
-    n = Nfa(State(), State())
-    s = State()
-
+    runMatchTest()
+    
+def runMatchTest():
     infix = "a.a"
     stringToMatch = "aa"
 
@@ -15,6 +14,7 @@ def main():
     for i in infixes:
         for s in strings:
             print re_matcher.match(i,s),i,s
+
 
 if __name__ == "__main__":
     main()
