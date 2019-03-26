@@ -1,2 +1,3 @@
 from thompsons_constructor import ThompsonsConstructor
 from shunting_yard import ShuntingYard
+import regex_matcher

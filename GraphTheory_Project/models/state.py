@@ -8,4 +8,24 @@ class State:
     def __hash__(self):
         return id(self)
 
+    def followEdges(state):
+        """Returns the set of states that can be reached from the state, following the arrows"""
+	    # create a new set with state as its only member
+        states = set()
+        states.add(state)
+	    # if state has e arrows
+        if(state.label is None):
+		    # check if edge one is a state
+            if(state.e1 is not None):
+			    # recursively follow the edges
+			    # union states
+                states |= followEedges(state.e1)
+		    # check if edge one is a state
+            if(state.e2 is not None):
+			    # recursively follow the edges
+			    # union states
+                states |= followEedges(state.e2)
+
+	    # return the set of states
+        return states
 

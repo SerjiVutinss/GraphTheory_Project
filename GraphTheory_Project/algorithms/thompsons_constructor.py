@@ -8,11 +8,9 @@ class ThompsonsConstructor():
     nfaSet = None
     nfaStack = None
 
-    stateSet = None
+    #stateSet = None
 
     solutionNfa = None
-
-    edgeSet = None
 
     def __init__(self, postfix):
         self.postfix = postfix
