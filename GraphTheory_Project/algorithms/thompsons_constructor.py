@@ -17,7 +17,7 @@ class ThompsonsConstructor():
     def __init__(self, postfix):
         self.postfix = postfix
         self.buildNfaFromPostFix()
-        self.followEedges()
+        #self.followEedges()
 
     def buildNfaFromPostFix(self):
         """Takes a postfix reg ex pattern as a parameter and returns the NFA"""
@@ -46,7 +46,7 @@ class ThompsonsConstructor():
                 initial = State()
                 accept = State()
                 initial.label = c # label is char
-                initial.edge1 = accept # point to the accept state
+                initial.e1 = accept # point to the accept state
                 newNfa = Nfa(initial, accept)
                 self.nfaSet.add(newNfa)
 			    # create a new nfa using the two states and push to stack
@@ -58,15 +58,15 @@ class ThompsonsConstructor():
     def handleConcat(self):
         # It can be assumed that there are at least, two NFAs
         # on the stack, else there would be no concat operator
-        n1 = self.nfaStack.pop()
         n2 = self.nfaStack.pop()
+        n1 = self.nfaStack.pop()
 
         # join the accept of the first NFA to the initial
         # of the second and create a new NFA
         n1.acceptState.e1 = n2.initialState
 
 
-        newNfa = Nfa(n1.initial, n2.accept)
+        newNfa = Nfa(n1.initialState, n2.acceptState)
         # push this new NFA to the stack
         self.nfaStack.append(newNfa)
         self.nfaSet.add(newNfa)
@@ -116,14 +116,14 @@ class ThompsonsConstructor():
 
         # create a new set with state as its only member
         self.stateSet = {}
-        print len(self.nfaSet)
+        #print len(self.nfaSet)
         for n in self.nfaSet:
             self.followEdge(n.initialState)
             self.followEdge(n.acceptState)
 
-        print len(self.stateSet)
-        for n in self.stateSet:
-            print n.label
+        #print len(self.stateSet)
+        #for n in self.stateSet:
+        #    print n.label
 
     def followEdge(self, state):
         """Follw edges recursively"""

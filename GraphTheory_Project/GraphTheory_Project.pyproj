@@ -40,11 +40,11 @@
     <Compile Include="models\__init__.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="samples_ian\sample_runner.py" />
-    <Compile Include="samples_ian\shunting_yard.py">
+    <Compile Include="samples_ian\sample_runner_ian.py" />
+    <Compile Include="samples_ian\shunting_yard_ian.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="samples_ian\thompsons_constructor.py">
+    <Compile Include="samples_ian\thompsons_constructor_ian.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="samples_ian\__init__.py">

@@ -1,30 +1,50 @@
-#from samples_ian import sample_runner
 from models import State, Nfa
-
 from algorithms import ThompsonsConstructor, ShuntingYard
 
 def main():
     print "Starting..."
-    #sample_runner.run()
-    n =  Nfa(State(), State())
+    n = Nfa(State(), State())
     s = State()
 
-    infix = "a*a"
+    infix = "a.a"
+    stringToMatch = "aa"
 
-    postfix = ShuntingYard.shunt(infix)
-    print "POSTFIX: " + postfix
+    infixes = ["a.b.c*", "a.(b|d).c*", "(a.(b|d))*", "a.(b.b)*.c"]
+    strings = ["", "abc", "abbc", "abcc", "abad", "abbbc"]
 
-    t = ThompsonsConstructor(postfix)
+    for i in infixes:
+        for s in strings:
+            print match(i,s),i,s
 
-    print t.solutionNfa
+    #print match(infix, stringToMatch)
+def match(infix, string):
+	"""Match string to infix reg ex"""
+	postfix = ShuntingYard.shunt(infix)
 
-    print len(t.nfaSet)
+	# shunt and compile the reg ex
+	nfa = ThompsonsConstructor(postfix).solutionNfa
 
-    for n in t.nfaSet:
-        print n.initialState.e1
-        print n.initialState.e2
-        print n.acceptState.e1
-        print n.acceptState.e2
+	# set of current and next states
+	currentStates = set()
+	nextStates = set()
+
+	# add initial state of nfa to current states
+	currentStates |= followEedges(nfa.initialState)
+
+	# loop through each character in the string
+	for s in string:
+		# loop through current states
+		for c in currentStates:
+			# check if state is labelled s
+			if(c.label == s):
+				# follow its E edge (will only be one)
+				nextStates |= followEedges(c.e1)
+		# set current to next and clear next set
+		currentStates = nextStates
+		nextStates = set()
+	    # return state is in set of current states
+	return (nfa.acceptState in currentStates)
+
 
 def followEedges(state):
 	"""Returns the set of states that can be reached from
@@ -36,15 +56,15 @@ def followEedges(state):
 	# if state has e arrows
 	if(state.label is None):
 		# check if edge one is a state
-		if(state.edge1 is not None):
+		if(state.e1 is not None):
 			# recursively follow the edges
 			# union states
-			states |= followEedges(state.edge1)
+			states |= followEedges(state.e1)
 		# check if edge one is a state
-		if(state.edge2 is not None):
+		if(state.e2 is not None):
 			# recursively follow the edges
 			# union states
-			states |= followEedges(state.edge2)
+			states |= followEedges(state.e2)
 
 	# return the set of states
 	return states
