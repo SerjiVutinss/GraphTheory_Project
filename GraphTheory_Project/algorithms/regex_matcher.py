@@ -1,6 +1,9 @@
 from models import State, Nfa
 from algorithms import ThompsonsConstructor, ShuntingYard
 
+import matplotlib.pyplot as plt
+import networkx as nx
+
 def match(infix, string):
     """Match string to infix reg ex"""
     postfix = ShuntingYard.shunt(infix)
@@ -8,8 +11,50 @@ def match(infix, string):
     tc = ThompsonsConstructor(postfix)
     nfa = tc.solutionNfa
 
+    G = nx.DiGraph()
+
+    stateSet = set()
+    edgeLabels = {}
+
     for s in tc.edgeList:
-        print hash(s.from_state), s.label, hash(s.to_state)
+        stateSet.add(s.from_state)
+        stateSet.add(s.to_state)
+        edgeLabels[(s.from_state, s.to_state)] = s.label
+        #G.add_edge(s.from_state, s.to_state, node_color = 'blue')
+
+    # states with an in degree > 0
+    inDegreeSet = set()
+    for s in stateSet:
+        inDegreeSet.add(s.e1)
+        inDegreeSet.add(s.e2)
+
+    for s in stateSet:
+        if s not in inDegreeSet:
+            s.stateNumber = -1
+
+
+    G.add_nodes_from(stateSet)
+    colorMap = []
+    for g in G:
+        if g.e1 is None and g.e2 is None:
+            colorMap.append('green')
+        if g.stateNumber == -1:
+            colorMap.append('orange')
+        else: colorMap.append('cyan')
+
+    for s in tc.edgeList:
+        G.add_edge(s.from_state, s.to_state, node_color = 'blue')
+
+    pos = nx.fruchterman_reingold_layout(G)
+    nx.draw_networkx_edge_labels(G, pos, edge_labels = edgeLabels, node_color = colorMap)
+    nx.draw(G, pos, node_color = colorMap, with_labels = True)
+    #nx.draw(G, pos, node_color = colorMap)
+
+    plt.style.use(['dark_background'])
+
+    #plt.axis('off')
+    plt.axes().patch.set_facecolor('black')
+    plt.show()
 
 	# set of current and next states
     currentStates = set()

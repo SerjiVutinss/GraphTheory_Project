@@ -4,9 +4,21 @@ class State:
     # edges - used to connect to other states
     e1 = None
     e2 = None
+    isFirst = None
+    stateNumber = None
 
     def __hash__(self):
         return id(self)
+
+    def __str__(self):
+        if(self.stateNumber != None):
+            if(self.stateNumber == 0):
+                return 'I'
+            else:
+                #return str(self.stateNumber)
+                return ""
+        else:
+            return "A"
 
     def followEdges(state):
         """Returns the set of states that can be reached from the state, following the arrows"""

@@ -12,6 +12,8 @@ class ThompsonsConstructor():
 
     edgeList = None
 
+    stateCount = None
+
     def __init__(self, postfix):
         self.postfix = postfix
         self.edgeList = list()
@@ -19,11 +21,11 @@ class ThompsonsConstructor():
         #self.buildEdgeSet()
 
     def addToEdgeList(self, from_state, to_state, label):
-        self.edgeList.append(Edge(from_state, to_state, label))
+        self.edgeList.append(Edge(from_state, to_state, label, True))
 
     def buildNfaFromPostFix(self):
         """Takes a postfix reg ex pattern as a parameter and returns the NFA"""
-
+        self.stateCount = 0
         # keep track of all states in this set
         self.nfaSet = set()
         # create a stack for use within the algorithm,
@@ -46,11 +48,15 @@ class ThompsonsConstructor():
 
             else:
                 initial = State()
+                initial.stateNumber = self.stateCount
+                self.stateCount += 1
                 accept = State()
+                accept.stateNumber = self.stateCount
+                self.stateCount += 1
                 initial.label = c # label is char
                 initial.e1 = accept # point to the accept state
 
-                self.addToEdgeList(initial, accept, initial.label)
+                self.addToEdgeList(initial, accept, c)
 
                 newNfa = Nfa(initial, accept)
                 #self.nfaSet.add(newNfa)
@@ -83,7 +89,11 @@ class ThompsonsConstructor():
         n1 = self.nfaStack.pop()
 		# create new initial and accept states
         initial = State()
+        initial.stateNumber = self.stateCount
+        self.stateCount += 1
         accept = State()
+        initial.stateNumber = self.stateCount
+        self.stateCount += 1
         # connect the initial state to the initial states of the nfas
         initial.e1 = n1.initialState
         initial.e2 = n2.initialState
@@ -100,7 +110,7 @@ class ThompsonsConstructor():
 
         # push a new nfa to the stack, using accept and initial states
         newNfa = Nfa(initial, accept)
-        #self.nfaSet.add(newNfa)   
+        #self.nfaSet.add(newNfa)
         self.nfaStack.append(newNfa)
 
     def handleStar(self):
@@ -109,7 +119,11 @@ class ThompsonsConstructor():
         n1 = self.nfaStack.pop()
         # create new initial and accept states
         initial = State()
+        initial.stateNumber = self.stateCount
+        self.stateCount += 1
         accept = State()
+        initial.stateNumber = self.stateCount
+        self.stateCount += 1
         # join the new initial state to the nfa initial state
         # and the new accept state
         initial.e1 = n1.initialState
@@ -128,7 +142,7 @@ class ThompsonsConstructor():
         
         # push new nfa to stack
         newNfa = Nfa(initial, accept)
-        #self.nfaSet.add(newNfa)			    
+        #self.nfaSet.add(newNfa)
         self.nfaStack.append(newNfa)
 
     def handleCross(self):
@@ -137,7 +151,11 @@ class ThompsonsConstructor():
         n1 = self.nfaStack.pop()
         # create new initial and accept states
         initial = State()
+        initial.stateNumber = self.stateCount
+        self.stateCount += 1
         accept = State()
+        initial.stateNumber = self.stateCount
+        self.stateCount += 1
         # join the new initial state to the nfa initial state
         initial.e1 = n1.initialState
 
@@ -153,7 +171,7 @@ class ThompsonsConstructor():
         
         # push new nfa to stack
         newNfa = Nfa(initial, accept)
-        #self.nfaSet.add(newNfa)			    
+        #self.nfaSet.add(newNfa)
         self.nfaStack.append(newNfa)
 
     def buildEdgeSet(self):

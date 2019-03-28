@@ -17,15 +17,19 @@ def appLoop():
             print "You selected 1"
         elif(selection == '2'):
             print "You selected 2"
-            runMatchTest()
+            runMatchAllTest()
         elif(selection == 'q'):
             keepRunning = False
         else:
             print "Invalid Selection, please try again"
+
+def runMatchOneTest():
+    infix = "(a.(b|d))*"
+    stringToMatch = "abc"
+    print re_matcher.match(infix, stringToMatch), infix, stringToMatch
+
     
-def runMatchTest():
-    infix = "a.a"
-    stringToMatch = "aa"
+def runMatchAllTest():
 
     infixes = ["a.b.c*", "a.(b|d).c*", "(a.(b|d))*", "a.(b.b)*.c"]
     strings = ["", "abc", "abbc", "abcc", "abad", "abbbc"]
