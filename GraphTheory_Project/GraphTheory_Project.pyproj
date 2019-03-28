@@ -34,6 +34,9 @@
     <Compile Include="app.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="models\edge.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="models\nfa.py">
       <SubType>Code</SubType>
     </Compile>

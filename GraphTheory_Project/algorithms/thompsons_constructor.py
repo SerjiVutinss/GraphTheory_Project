@@ -1,4 +1,4 @@
-from models import Nfa, State
+from models import Nfa, State, Edge
 
 regex_operators = {'|': 10, '.': 20, '*': 30}
 
@@ -8,14 +8,15 @@ class ThompsonsConstructor():
     nfaSet = None
     nfaStack = None
 
-    #stateSet = None
-
     solutionNfa = None
+
+    edgeList = None
 
     def __init__(self, postfix):
         self.postfix = postfix
         self.buildNfaFromPostFix()
-        #self.followEedges()
+        self.edgeList = list()
+        #self.buildEdgeSet()
 
     def buildNfaFromPostFix(self):
         """Takes a postfix reg ex pattern as a parameter and returns the NFA"""
@@ -108,32 +109,53 @@ class ThompsonsConstructor():
         self.nfaSet.add(newNfa)			    
         self.nfaStack.append(newNfa)
 
-    def followEedges(self):
+    def handleCross(self):
+        # pop single NFA since this has the least order of
+        # precedence...
+        n1 = self.nfaStack.pop()
+        # create new initial and accept states
+        initial = State()
+        accept = State()
+        # join the new initial state to the nfa initial state
+        # and the new accept state
+        initial.e1 = n1.initialState
+        # join old acept state to new accept state and nfa1's
+        # initial state
+        n1.acceptState.e1 = n1.initialState
+        n1.acceptState.e2 = accept
+        # push new nfa to stack
+        newNfa = Nfa(initial, accept)
+        self.nfaSet.add(newNfa)			    
+        self.nfaStack.append(newNfa)
+
+    def buildEdgeSet(self):
+        nfa = self.solutionNfa
+        edgeSet = set()
+
+        edgeSet |= self.followEedges(nfa.initialState)
+        print len(edgeSet)
+
+
+        return
+
+
+    def followEedges(self, state):
         """Returns the set of states that can be reached from
-		the state, following the arrows"""
+		    the state, following the arrows"""
 
-        # create a new set with state as its only member
-        self.stateSet = {}
-        #print len(self.nfaSet)
-        for n in self.nfaSet:
-            self.followEdge(n.initialState)
-            self.followEdge(n.acceptState)
-
-        #print len(self.stateSet)
-        #for n in self.stateSet:
-        #    print n.label
-
-    def followEdge(self, state):
-        """Follw edges recursively"""
-        if(state.e1 != None):
-            self.stateSet[state] = state.e1
-            self.followEdge(state.e1)
-        if(state.e2 != None):
-            self.stateSet[state] = state.e2
-            self.followEdge(state.e2)
-        if(state.e1 != None):
-            self.stateSet[state] = state.e1
-            self.followEdge(state.e1)
-        if(state.e2 != None):
-            self.stateSet[state] = state.e2
-            self.followEdge(state.e2)
+	    # create a new set with state as its only member
+        edges = set()
+        # check if edge one is a state
+        if(state.e1 is not None):
+            # recursively follow the edges
+            # union states
+            edges.add(Edge(state, state.e1))
+            edges |= self.followEedges(state.e1)
+	    # check if edge one is a state
+        if(state.e2 is not None):
+		    # recursively follow the edges
+			# union states
+            edges.add(Edge(state, state.e2))
+            edges |= self.followEedges(state.e2)
+	    # return the set of states
+        return edges
