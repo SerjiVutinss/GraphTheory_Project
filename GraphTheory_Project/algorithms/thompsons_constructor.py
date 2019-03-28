@@ -5,7 +5,7 @@ regex_operators = {'|': 10, '.': 20, '*': 30}
 class ThompsonsConstructor():
 
     postfix = None
-    nfaSet = None
+    #nfaSet = None
     nfaStack = None
 
     solutionNfa = None
@@ -14,9 +14,12 @@ class ThompsonsConstructor():
 
     def __init__(self, postfix):
         self.postfix = postfix
-        self.buildNfaFromPostFix()
         self.edgeList = list()
+        self.buildNfaFromPostFix()
         #self.buildEdgeSet()
+
+    def addToEdgeList(self, from_state, to_state, label):
+        self.edgeList.append(Edge(from_state, to_state, label))
 
     def buildNfaFromPostFix(self):
         """Takes a postfix reg ex pattern as a parameter and returns the NFA"""
@@ -46,8 +49,11 @@ class ThompsonsConstructor():
                 accept = State()
                 initial.label = c # label is char
                 initial.e1 = accept # point to the accept state
+
+                self.addToEdgeList(initial, accept, initial.label)
+
                 newNfa = Nfa(initial, accept)
-                self.nfaSet.add(newNfa)
+                #self.nfaSet.add(newNfa)
 			    # create a new nfa using the two states and push to stack
                 self.nfaStack.append(newNfa)
 
@@ -63,12 +69,12 @@ class ThompsonsConstructor():
         # join the accept of the first NFA to the initial
         # of the second and create a new NFA
         n1.acceptState.e1 = n2.initialState
-
+        self.addToEdgeList(n1.acceptState, n2.initialState, "E")
 
         newNfa = Nfa(n1.initialState, n2.acceptState)
         # push this new NFA to the stack
         self.nfaStack.append(newNfa)
-        self.nfaSet.add(newNfa)
+        #self.nfaSet.add(newNfa)
 
     def handleOr(self):
 		# It can be assumed that there are at least, two NFAs
@@ -81,12 +87,20 @@ class ThompsonsConstructor():
         # connect the initial state to the initial states of the nfas
         initial.e1 = n1.initialState
         initial.e2 = n2.initialState
+
+        self.addToEdgeList(initial, n1.initialState, "E")
+        self.addToEdgeList(initial, n2.initialState, "E")
+
         # connect the accept state to the accept states of the nfas
         n1.acceptState.e1 = accept
         n2.acceptState.e1 = accept
+
+        self.addToEdgeList(n1.acceptState, accept, "E")
+        self.addToEdgeList(n2.acceptState, accept, "E")
+
         # push a new nfa to the stack, using accept and initial states
         newNfa = Nfa(initial, accept)
-        self.nfaSet.add(newNfa)   
+        #self.nfaSet.add(newNfa)   
         self.nfaStack.append(newNfa)
 
     def handleStar(self):
@@ -100,13 +114,21 @@ class ThompsonsConstructor():
         # and the new accept state
         initial.e1 = n1.initialState
         initial.e2 = accept
+
+        self.addToEdgeList(initial, n1.initialState, "E")
+        self.addToEdgeList(initial, accept, "E")
+
         # join old acept state to new accept state and nfa1's
         # initial state
         n1.acceptState.e1 = n1.initialState
         n1.acceptState.e2 = accept
+
+        self.addToEdgeList(n1.acceptState, n1.initialState, "E")
+        self.addToEdgeList(n1.acceptState, accept, "E")
+        
         # push new nfa to stack
         newNfa = Nfa(initial, accept)
-        self.nfaSet.add(newNfa)			    
+        #self.nfaSet.add(newNfa)			    
         self.nfaStack.append(newNfa)
 
     def handleCross(self):
@@ -117,15 +139,21 @@ class ThompsonsConstructor():
         initial = State()
         accept = State()
         # join the new initial state to the nfa initial state
-        # and the new accept state
         initial.e1 = n1.initialState
+
+        self.addToEdgeList(initial, n1.initialState, "E")
+
         # join old acept state to new accept state and nfa1's
         # initial state
         n1.acceptState.e1 = n1.initialState
         n1.acceptState.e2 = accept
+
+        self.addToEdgeList(n1.acceptState, n1.initialState, "E")
+        self.addToEdgeList(n1.acceptState, accept, "E")
+        
         # push new nfa to stack
         newNfa = Nfa(initial, accept)
-        self.nfaSet.add(newNfa)			    
+        #self.nfaSet.add(newNfa)			    
         self.nfaStack.append(newNfa)
 
     def buildEdgeSet(self):

@@ -2,35 +2,36 @@ from models import State, Nfa
 from algorithms import ThompsonsConstructor, ShuntingYard
 
 def match(infix, string):
-	"""Match string to infix reg ex"""
-	postfix = ShuntingYard.shunt(infix)
+    """Match string to infix reg ex"""
+    postfix = ShuntingYard.shunt(infix)
+    # shunt and compile the reg ex
+    tc = ThompsonsConstructor(postfix)
+    nfa = tc.solutionNfa
 
-	# shunt and compile the reg ex
-	tc = ThompsonsConstructor(postfix)
-	nfa = tc.solutionNfa
+    for s in tc.edgeList:
+        print hash(s.from_state), s.label, hash(s.to_state)
 
 	# set of current and next states
-	currentStates = set()
-	nextStates = set()
-
+    currentStates = set()
+    nextStates = set()
 	# add initial state of nfa to current states
-	currentStates |= followEedges(nfa.initialState)
+    currentStates |= followEedges(nfa.initialState)
 
 	# loop through each character in the string
-	for s in string:
+    for s in string:
 		# loop through current states
-		for c in currentStates:
-			# check if state is labelled s
-			if(c.label == s):
+        for c in currentStates:
+            # check if state is labelled s
+            if(c.label == s):
 				# follow its E edge (will only be one)
-				nextStates |= followEedges(c.e1)
+                nextStates |= followEedges(c.e1)
 		# set current to next and clear next set
-		currentStates = nextStates
-		nextStates = set()
+        currentStates = nextStates
+        nextStates = set()
 	    # return state is in set of current
 	    # return state is in set of current
 
-	return (nfa.acceptState in currentStates)
+    return (nfa.acceptState in currentStates)
 
 
 def followEedges(state):
