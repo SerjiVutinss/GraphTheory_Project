@@ -1,6 +1,6 @@
 from models import Nfa, State, Edge
 
-regex_operators = {'|': 10, '.': 20, '*': 30}
+regex_operators = {'|': 10, '.': 20, '+':25, '*': 30}
 
 class ThompsonsConstructor():
 

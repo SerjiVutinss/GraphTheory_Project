@@ -8,7 +8,7 @@ class State:
     stateNumber = None
 
     def __hash__(self):
-        return id(self)
+        return id(self) + id(self.e1) + id(self.e2) + id(self.stateNumber)
 
     def __str__(self):
         if(self.stateNumber != None):

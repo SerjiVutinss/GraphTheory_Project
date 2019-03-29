@@ -1,4 +1,4 @@
-from models import State, Nfa
+from models import State, Nfa, Edge
 from algorithms import ThompsonsConstructor, ShuntingYard
 
 import matplotlib.pyplot as plt
@@ -15,6 +15,15 @@ def match(infix, string):
 
     stateSet = set()
     edgeLabels = {}
+
+    duplicateSet = set()
+
+
+    for s in tc.edgeList:
+        for t in tc.edgeList:
+            if(s != t):
+                if(s.from_state == t.to_state and s.to_state == t.from_state):
+                    print "Hello"
 
     for s in tc.edgeList:
         stateSet.add(s.from_state)
@@ -40,7 +49,7 @@ def match(infix, string):
             colorMap.append('green')
         if g.stateNumber == -1:
             colorMap.append('orange')
-        else: colorMap.append('cyan')
+        else: colorMap.append('blue')
 
     for s in tc.edgeList:
         G.add_edge(s.from_state, s.to_state, node_color = 'blue')
