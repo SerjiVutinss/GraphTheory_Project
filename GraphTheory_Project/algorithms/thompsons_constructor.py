@@ -1,4 +1,5 @@
 from models import Nfa, State, Edge
+from utils import Stack
 
 import plotter
 
@@ -33,7 +34,7 @@ class ThompsonsConstructor():
         # create a stack for use within the algorithm,
         # the last element remaining on the stack once the algorithm
         # completes will be the 'solution' NFA
-        self.nfaStack = []
+        self.nfaStack = Stack()
 
         # loop through the postfix string, dealing with any special
         # characters first
@@ -63,7 +64,8 @@ class ThompsonsConstructor():
                 newNfa = Nfa(initial, accept)
                 #self.nfaSet.add(newNfa)
 			    # create a new nfa using the two states and push to stack
-                self.nfaStack.append(newNfa)
+                # self.nfaStack.append(newNfa)
+                self.nfaStack.push(newNfa)
 
 
         self.solutionNfa = self.nfaStack.pop()
@@ -81,7 +83,8 @@ class ThompsonsConstructor():
 
         newNfa = Nfa(n1.initialState, n2.acceptState)
         # push this new NFA to the stack
-        self.nfaStack.append(newNfa)
+        #self.nfaStack.append(newNfa)
+        self.nfaStack.push(newNfa)
         #self.nfaSet.add(newNfa)
 
     def handleOr(self):
@@ -113,7 +116,8 @@ class ThompsonsConstructor():
         # push a new nfa to the stack, using accept and initial states
         newNfa = Nfa(initial, accept)
         #self.nfaSet.add(newNfa)
-        self.nfaStack.append(newNfa)
+        #self.nfaStack.append(newNfa)
+        self.nfaStack.push(newNfa)
 
     def handleStar(self):
         # pop single NFA since this has the least order of
@@ -145,7 +149,8 @@ class ThompsonsConstructor():
         # push new nfa to stack
         newNfa = Nfa(initial, accept)
         #self.nfaSet.add(newNfa)
-        self.nfaStack.append(newNfa)
+        #self.nfaStack.append(newNfa)
+        self.nfaStack.push(newNfa)
 
     def handleCross(self):
         # pop single NFA since this has the least order of
@@ -174,7 +179,8 @@ class ThompsonsConstructor():
         # push new nfa to stack
         newNfa = Nfa(initial, accept)
         #self.nfaSet.add(newNfa)
-        self.nfaStack.append(newNfa)
+        #self.nfaStack.append(newNfa)
+        self.nfaStack.push(newNfa)
 
     def buildEdgeSet(self):
         nfa = self.solutionNfa
