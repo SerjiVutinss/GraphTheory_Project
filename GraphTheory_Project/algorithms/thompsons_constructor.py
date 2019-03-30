@@ -1,4 +1,5 @@
 from models import Nfa, State, Edge
+import plotter
 
 regex_operators = {'|': 10, '.': 20, '+':25, '*': 30}
 
