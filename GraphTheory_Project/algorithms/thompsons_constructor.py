@@ -21,7 +21,6 @@ class ThompsonsConstructor():
         self.postfix = postfix
         self.edgeList = list()
         self.buildNfaFromPostFix()
-        #self.buildEdgeSet()
 
     def addToEdgeList(self, from_state, to_state, label):
         self.edgeList.append(Edge(from_state, to_state, label, True))
@@ -61,10 +60,8 @@ class ThompsonsConstructor():
 
                 self.addToEdgeList(initial, accept, c)
 
-                newNfa = Nfa(initial, accept)
-                #self.nfaSet.add(newNfa)
 			    # create a new nfa using the two states and push to stack
-                # self.nfaStack.append(newNfa)
+                newNfa = Nfa(initial, accept)
                 self.nfaStack.push(newNfa)
 
 
@@ -81,11 +78,9 @@ class ThompsonsConstructor():
         n1.acceptState.e1 = n2.initialState
         self.addToEdgeList(n1.acceptState, n2.initialState, "E")
 
+        # create a new nfa using the two states and push to stack
         newNfa = Nfa(n1.initialState, n2.acceptState)
-        # push this new NFA to the stack
-        #self.nfaStack.append(newNfa)
         self.nfaStack.push(newNfa)
-        #self.nfaSet.add(newNfa)
 
     def handleOr(self):
 		# It can be assumed that there are at least, two NFAs
@@ -113,10 +108,8 @@ class ThompsonsConstructor():
         self.addToEdgeList(n1.acceptState, accept, "E")
         self.addToEdgeList(n2.acceptState, accept, "E")
 
-        # push a new nfa to the stack, using accept and initial states
+        # create a new nfa using the two states and push to stack
         newNfa = Nfa(initial, accept)
-        #self.nfaSet.add(newNfa)
-        #self.nfaStack.append(newNfa)
         self.nfaStack.push(newNfa)
 
     def handleStar(self):
@@ -146,10 +139,8 @@ class ThompsonsConstructor():
         self.addToEdgeList(n1.acceptState, n1.initialState, "E")
         self.addToEdgeList(n1.acceptState, accept, "E")
         
-        # push new nfa to stack
+        # create a new nfa using the two states and push to stack
         newNfa = Nfa(initial, accept)
-        #self.nfaSet.add(newNfa)
-        #self.nfaStack.append(newNfa)
         self.nfaStack.push(newNfa)
 
     def handleCross(self):
@@ -176,40 +167,6 @@ class ThompsonsConstructor():
         self.addToEdgeList(n1.acceptState, n1.initialState, "E")
         self.addToEdgeList(n1.acceptState, accept, "E")
         
-        # push new nfa to stack
+        # create a new nfa using the two states and push to stack
         newNfa = Nfa(initial, accept)
-        #self.nfaSet.add(newNfa)
-        #self.nfaStack.append(newNfa)
         self.nfaStack.push(newNfa)
-
-    def buildEdgeSet(self):
-        nfa = self.solutionNfa
-        edgeSet = set()
-
-        edgeSet |= self.followEedges(nfa.initialState)
-        print len(edgeSet)
-
-
-        return
-
-
-    def followEedges(self, state):
-        """Returns the set of states that can be reached from
-		    the state, following the arrows"""
-
-	    # create a new set with state as its only member
-        edges = set()
-        # check if edge one is a state
-        if(state.e1 is not None):
-            # recursively follow the edges
-            # union states
-            edges.add(Edge(state, state.e1))
-            edges |= self.followEedges(state.e1)
-	    # check if edge one is a state
-        if(state.e2 is not None):
-		    # recursively follow the edges
-			# union states
-            edges.add(Edge(state, state.e2))
-            edges |= self.followEedges(state.e2)
-	    # return the set of states
-        return edges
