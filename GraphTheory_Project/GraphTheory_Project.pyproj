@@ -59,10 +59,17 @@
     <Compile Include="samples_ian\__init__.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="utils\stack.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="utils\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="models\" />
     <Folder Include="algorithms\" />
+    <Folder Include="utils\" />
     <Folder Include="samples_ian\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
