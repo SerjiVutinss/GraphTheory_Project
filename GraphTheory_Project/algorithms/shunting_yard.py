@@ -31,7 +31,7 @@ class ShuntingYard:
                     postfix = postfix +  stack.pop()
                     # remove the character from the stack
                     #stack = stack[:-1]
-                    stack.pop()
+                    #stack.pop()
                 # remove the bracket from the stack
                 #stack = stack[:-1]
                 stack.pop()
