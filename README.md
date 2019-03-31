@@ -25,7 +25,11 @@ A Python program to execute regular expressions on strings using Thompson's Cons
 
 ### Sample Charts
 
-I have included a selection of images of charted NFAs using the program.  It should be noted that the Initial state of the 'solution NFA' is coloured orange, while the Accept state is coloured green.
+A selection of images of charted NFAs using the program.  
+
+It should be noted that the Initial state of the 'solution NFA' (or overall NFA) is coloured orange, while the Accept state is coloured green.  The Initial state should have an in-degree of zero, while the Accept state should have an out-degree of zero.
+
+Due to the random nature of the chart layouts, easily readable charts are not always generated.  This is a feature which could be expanded on and improved on in future.
 
 ![a.b.c*](https://github.com/SerjiVutinss/GraphTheory_Project/blob/master/GraphTheory_Project/img/img_ab_c_star.png)
 
