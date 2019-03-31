@@ -18,7 +18,8 @@ def testPlot():
 
     nx.draw(G)
 
-    #nx.draw_networkx_edge_labels(G, pos, edge_labels = edgeLabels, node_color = colorMap)
+    #nx.draw_networkx_edge_labels(G, pos, edge_labels = edgeLabels, node_color
+    #= colorMap)
     nx.draw(G, with_labels = True)
     ##nx.draw(G, pos, node_color = colorMap)
 
@@ -28,32 +29,41 @@ def testPlot():
     #plt.axes().patch.set_facecolor('black')
     plt.show()
 
-
-
 def plot(thompsonsConstructor):
-    G = nx.DiGraph()
+    """
+        Create and display a NetworkX network chart using matplotlib
+    """
 
-    tc = thompsonsConstructor
-
-    stateSet = set()
+    tc = thompsonsConstructor # constructor param named for clarity, reassign for brevity
+    stateSet = set() # set of all states in the NFA
     edgeLabels = {}
 
     duplicateSet = set()
 
+    # states with an in degree > 0 cannot be the initial state
+    inDegreeSet = set()
+    for s in stateSet:
+        inDegreeSet.add(s.e1)
+        inDegreeSet.add(s.e2)
+
+    initialState = None
+    for s in stateSet:
+        if s not in inDegreeSet:
+            initialState = s
+
+    # find any states which have two edges between them
     for s in tc.edgeList:
         for t in tc.edgeList:
             if(s != t):
                 if(s.from_state == t.to_state and s.to_state == t.from_state):
-                    nS = State()
-
-                    a = s.from_state
-                    c = s.to_state
-
+                    # double edge found
+                    # join each state to a new state with empty string
                     newState1 = State()
                     newState1.e1 = ""
                     newState1.label = "E"
 
                     # for s
+                    # add the new edges
                     tc.edgeList.append(Edge(s.from_state, newState1, s.from_state.label, False))
                     tc.edgeList.append(Edge(newState1, s.to_state, newState1.label, False))
 
@@ -64,40 +74,46 @@ def plot(thompsonsConstructor):
                     tc.edgeList.append(Edge(t.from_state, newState2, "E", False))
                     tc.edgeList.append(Edge(newState2, t.to_state, "E", False))
 
+                    # remove the old edges, since they have been replaced
                     tc.edgeList.remove(s)
                     tc.edgeList.remove(t)
 
-                    tc.edgeList.sort()
-
+    # add the new states (if any) to the stateset
     for s in tc.edgeList:
         stateSet.add(s.from_state)
         stateSet.add(s.to_state)
+        # also add the label
         edgeLabels[(s.from_state, s.to_state)] = s.label
-        #G.add_edge(s.from_state, s.to_state, node_color = 'blue')
 
-    ## states with an in degree > 0
-    #inDegreeSet = set()
-    #for s in stateSet:
-    #    inDegreeSet.add(s.e1)
-    #    inDegreeSet.add(s.e2)
+    # states with an in degree > 0 cannot be the initial state
+    inDegreeSet = set()
+    for s in stateSet:
+        inDegreeSet.add(s.e1)
+        inDegreeSet.add(s.e2)
 
-    #for s in stateSet:
-    #    if s not in inDegreeSet:
-    #        s.stateNumber = -1
+    initialState = None
+    for s in stateSet:
+        if s not in inDegreeSet:
+            initialState = s
 
 
-    G.add_nodes_from(stateSet)
+    # drawing the graph
+    G = nx.DiGraph()
+    G.add_nodes_from(stateSet) # add all states
     colorMap = []
+    # set colour dependent on state
     for g in G:
         if g.e1 is None and g.e2 is None:
             colorMap.append('green')
-        if str(g) == 'I':
+        if g == initialState:
             colorMap.append('orange')
         else: colorMap.append('blue')
 
+    # add all edges in edge list to the graph with a default colour
     for s in tc.edgeList:
         G.add_edge(s.from_state, s.to_state, node_color = 'blue')
 
+    # set a layout
     pos = nx.fruchterman_reingold_layout(G)
     # draw the edge labels
     nx.draw_networkx_edge_labels(G, pos, edge_labels = edgeLabels, node_color = colorMap)

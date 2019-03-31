@@ -6,14 +6,16 @@ class Result:
     infix = None
     postfix = None
     isAccepted = None
+    thompsonsConstruction = None
 
     #string, infix, nfa.acceptState in currentStates, postfix
 
-    def __init__(self, string, infix, isAccepted, postfix):
+    def __init__(self, string, infix, isAccepted, postfix, thompsonsConstruction):
         self.string = string
         self.infix = infix
         self.isAccepted = isAccepted
         self.postfix = postfix
+        self.thompsonsConstruction = thompsonsConstruction
 
     def printResult(self):
         displayString = ''

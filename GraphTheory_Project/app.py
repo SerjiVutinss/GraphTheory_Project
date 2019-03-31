@@ -1,4 +1,5 @@
 from algorithms import regex_matcher as re_matcher
+from plotter import plot
 import plotter
 
 import utils
@@ -65,8 +66,12 @@ def runMatchAllTest(infix_list, string_list):
 
             result_list.append(r)
 
+    isPlotted = True
     for r in result_list:
         r.printResult()
+        if(isPlotted):
+            plotter.plot(r.thompsonsConstruction)
+
     utils.fr.writeToCsv(result_list)
 
 if __name__ == "__main__":

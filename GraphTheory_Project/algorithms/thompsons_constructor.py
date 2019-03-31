@@ -25,9 +25,7 @@ class ThompsonsConstructor():
     # List of all connections between states - used to build charts
     # Note that while any NFA may not actually be charted by the application,
     # it is best to create the edge list while creating the NFA
-    edgeList = None 
-
-    stateCount = None
+    edgeList = None
 
     def __init__(self, postfix):
         self.postfix = postfix
@@ -40,7 +38,6 @@ class ThompsonsConstructor():
 
     def buildNfaFromPostFix(self):
         """Build the solution NFA for this construction's postfix string"""
-        self.stateCount = 0
         # keep track of all states in this set
         self.nfaSet = set()
         # create a stack for use within the algorithm,
@@ -64,23 +61,13 @@ class ThompsonsConstructor():
             else:
                 # create a new inital and accept state
                 initial, accept = State(), State()
-
-                ## TODO: perhaps remove this code
-                #initial.stateNumber = self.stateCount
-                #self.stateCount += 1
-                ##accept = State()
-                #accept.stateNumber = self.stateCount
-                #self.stateCount += 1
-                #####
-
                 initial.label = c # label is the character read
                 initial.e1 = accept # point first edge to the accept state
-
                 # add the edge to the edge list
                 self.addToEdgeList(initial, accept, c)
-
 			    # create a new nfa using the two states and push to stack
                 self.nfaStack.push(Nfa(initial, accept))
+        
         self.solutionNfa = self.nfaStack.pop()
 
     def handleConcat(self):
