@@ -65,13 +65,13 @@ class ThompsonsConstructor():
                 # create a new inital and accept state
                 initial, accept = State(), State()
 
-                # TODO: perhaps remove this code
-                initial.stateNumber = self.stateCount
-                self.stateCount += 1
-                #accept = State()
-                accept.stateNumber = self.stateCount
-                self.stateCount += 1
-                ####
+                ## TODO: perhaps remove this code
+                #initial.stateNumber = self.stateCount
+                #self.stateCount += 1
+                ##accept = State()
+                #accept.stateNumber = self.stateCount
+                #self.stateCount += 1
+                #####
 
                 initial.label = c # label is the character read
                 initial.e1 = accept # point first edge to the accept state
@@ -102,31 +102,20 @@ class ThompsonsConstructor():
         # on the stack, else there would be no OR operator
         n2 = self.nfaStack.pop()
         n1 = self.nfaStack.pop()
-
 		# create new initial and accept states
         initial, accept = State(), State()
-
-        # TODO: perhaps remove this code
-        initial.stateNumber = self.stateCount
-        self.stateCount += 1
-        initial.stateNumber = self.stateCount
-        self.stateCount += 1
-        ####
-
-        # connect the initial state to the initial states of the nfas
+        # connect the new initial state to the initial states of the nfas
         initial.e1 = n1.initialState
         initial.e2 = n2.initialState
-
+        # add the above edges to the edgelist
         self.addToEdgeList(initial, n1.initialState, "E")
         self.addToEdgeList(initial, n2.initialState, "E")
-
         # connect the accept state to the accept states of the nfas
         n1.acceptState.e1 = accept
         n2.acceptState.e1 = accept
-
+        # add the above edges to the edgelist
         self.addToEdgeList(n1.acceptState, accept, "E")
         self.addToEdgeList(n2.acceptState, accept, "E")
-
         # create a new nfa using the two states and push to stack
         self.nfaStack.push(Nfa(initial, accept))
 
@@ -137,14 +126,6 @@ class ThompsonsConstructor():
         n1 = self.nfaStack.pop()
         # create new initial and accept states
         initial, accept = State(), State()
-
-        # TODO: perhaps remove this code
-        initial.stateNumber = self.stateCount
-        self.stateCount += 1
-        initial.stateNumber = self.stateCount
-        self.stateCount += 1
-        ####
-
         # join the new initial state to the nfa initial state and the new
         # accept state
         initial.e1 = n1.initialState
@@ -152,7 +133,6 @@ class ThompsonsConstructor():
         # add the above edges to the edgelist
         self.addToEdgeList(initial, n1.initialState, "E")
         self.addToEdgeList(initial, accept, "E")
-
         # join old acept state to new accept state and nfa1's
         # initial state
         n1.acceptState.e1 = n1.initialState
@@ -160,7 +140,6 @@ class ThompsonsConstructor():
         # add the above edges to the edgelist
         self.addToEdgeList(n1.acceptState, n1.initialState, "E")
         self.addToEdgeList(n1.acceptState, accept, "E")
-        
         # create a new nfa using the two states and push to stack
         self.nfaStack.push(Nfa(initial, accept))
 
@@ -171,19 +150,10 @@ class ThompsonsConstructor():
         n1 = self.nfaStack.pop()
         # create new initial and accept states
         initial, accept = State(), State()
-
-        # TODO: perhaps remove this code
-        initial.stateNumber = self.stateCount
-        self.stateCount += 1
-        initial.stateNumber = self.stateCount
-        self.stateCount += 1
-        ####
-
         # join the new initial state to the nfa initial state
         initial.e1 = n1.initialState
         # and add as an edge to the edgelist
         self.addToEdgeList(initial, n1.initialState, "E")
-
         # join old acept state to new accept state and nfa1's
         # initial state
         n1.acceptState.e1 = n1.initialState
@@ -191,6 +161,5 @@ class ThompsonsConstructor():
         # add the above edges to the edge list
         self.addToEdgeList(n1.acceptState, n1.initialState, "E")
         self.addToEdgeList(n1.acceptState, accept, "E")
-        
         # create a new nfa using the two states and push to stack
         self.nfaStack.push(Nfa(initial, accept))
