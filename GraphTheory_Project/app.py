@@ -21,8 +21,8 @@ def appLoop():
         elif(selection == '2'):
             print "You selected 2"
             
-            infixes = ["1.0.1*"]
-            strings = ["", "101", "abbc"]
+            infixes = ["1.0.1*", "a.((b.c)|b)*", "a.(b.b)*.c"]
+            strings = ["", "101", "abbc", "abcc", "abad", "abbbc"]
             runMatchAllTest(infixes, strings)
         elif(selection == '8'):
             print "You selected 8"
@@ -57,6 +57,7 @@ def runMatchAllTest(infix_list, string_list):
             # NOTE: match() returns an array of the form
             # [string, infix, accepted, postfix]
             r = re_matcher.match(i, s)
+
             result_list.append(r)
 
     for r in result_list:
