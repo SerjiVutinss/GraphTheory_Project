@@ -21,3 +21,20 @@ A Python program to execute regular expressions on strings using Thompson's Cons
 ```python
       python app.py
 ```
+
+
+### Sample Charts
+
+I have included a selection of images of charted NFAs using the program.  It should be noted that the Initial state of the 'solution NFA' is coloured orange, while the Accept state is coloured green.
+
+![a.b.c*](https://github.com/SerjiVutinss/GraphTheory_Project/blob/master/GraphTheory_Project/img/img_ab_c_star.png)
+
+##### *Chart above shows the NFA for the reg-ex: *a.b.c***
+
+![a.(b.b)*.c](https://github.com/SerjiVutinss/GraphTheory_Project/blob/master/GraphTheory_Project/img/img_a_bb_star_c_star.png)
+
+##### *Chart above shows the NFA for the reg-ex: *a.(b.b)*.c**
+
+![(a.b.c.(b|d))*](https://github.com/SerjiVutinss/GraphTheory_Project/blob/master/GraphTheory_Project/img/img_abc_and_b_or_d_star.png)
+
+##### *Chart above shows the NFA for the reg-ex: *(a.b.c.(b|d))***
