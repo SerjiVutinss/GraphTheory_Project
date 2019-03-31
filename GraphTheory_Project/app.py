@@ -16,6 +16,7 @@ def menuLoop():
     string_file_name = None
     output_file_name = None
 
+    # run the menu
     while(keepRunning):
         print ""
         print "------------------------"
@@ -70,18 +71,25 @@ def menuLoop():
 
 
         # Options
+
         ## toggle plotting chart
         elif(selection == 'p'):
             print "You selected 'p' - toggle Plotting"
             isPlotting = not isPlotting
             print "Write To File = " + str(isPlotting)
+
         ## toggle writing to file
         elif(selection == 'w'):
             print "You selected 'w' - output to csv file"
             isWriteToFile = not isWriteToFile
             if(isWriteToFile):
                 output_file_name = raw_input('Please enter the output file name: ')
-                print "New output file: " + output_file_name
+                if len(output_file_name) != 0:
+                    print "New output file: " + output_file_name
+                else:
+                    print "Output file name cannot be empty!"
+                    # disable writing to CSV since output filename was empty
+                    isWriteToFile = not isWriteToFile
             else:
                 output_file_name = None
             print "Write To File = " + str(isWriteToFile)
