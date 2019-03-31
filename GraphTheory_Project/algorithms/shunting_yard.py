@@ -65,4 +65,5 @@ class ShuntingYard:
             #stack = stack[:-1]
             #stack.pop()
 
+        print (infix, postfix)
         return postfix

@@ -1,4 +1,5 @@
 from algorithms import regex_matcher as re_matcher
+import plotter
 
 def main():
     print "Starting..."
@@ -18,6 +19,9 @@ def appLoop():
         elif(selection == '2'):
             print "You selected 2"
             runMatchAllTest()
+        elif(selection == '9'):
+            print "You selected 9"
+            plotter.testPlot()
         elif(selection == 'q'):
             keepRunning = False
         else:
@@ -31,8 +35,9 @@ def runMatchOneTest():
     
 def runMatchAllTest():
 
-    infixes = ["a.b.c*", "a.(b|d).c*", "(a.(b|d))*", "a.(b.b)*.c"]
-    strings = ["", "abc", "abbc", "abcc", "abad", "abbbc"]
+    #infixes = ["a.b.c*", "a.(b|d).c*", "(a.(b|d))*", "a.(b.b)*.c"]
+    infixes = ["1.0.1*", "a.((b.c)|b)*", "a.(b.b)*.c"]
+    strings = ["", "101", "abbc", "abcc", "abad", "abbbc"]
 
     for i in infixes:
         for s in strings:

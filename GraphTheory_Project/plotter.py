@@ -3,6 +3,33 @@ from models import State, Nfa, Edge
 import matplotlib.pyplot as plt
 import networkx as nx
 
+def testPlot():
+    G = nx.DiGraph()
+
+    positions = {}
+
+    n0 = G.add_node(0)
+    n1 = G.add_node(1)
+    n2 = G.add_node(2)
+    n3 = G.add_node(3)
+
+    edgeLabels = {}
+
+
+    nx.draw(G)
+
+    #nx.draw_networkx_edge_labels(G, pos, edge_labels = edgeLabels, node_color = colorMap)
+    nx.draw(G, with_labels = True)
+    ##nx.draw(G, pos, node_color = colorMap)
+
+    #plt.style.use(['dark_background'])
+
+    #plt.axis('off')
+    #plt.axes().patch.set_facecolor('black')
+    plt.show()
+
+
+
 def plot(thompsonsConstructor):
     G = nx.DiGraph()
 
@@ -12,7 +39,6 @@ def plot(thompsonsConstructor):
     edgeLabels = {}
 
     duplicateSet = set()
-
 
     for s in tc.edgeList:
         for t in tc.edgeList:
@@ -35,8 +61,8 @@ def plot(thompsonsConstructor):
                     newState2.e1 = ""
                     newState2.label = "E"
                     # for t
-                    tc.edgeList.append(Edge(t.from_state, newState2, t.from_state.label, False))
-                    tc.edgeList.append(Edge(newState2, t.to_state, newState2.label, False))
+                    tc.edgeList.append(Edge(t.from_state, newState2, "E", False))
+                    tc.edgeList.append(Edge(newState2, t.to_state, "E", False))
 
                     tc.edgeList.remove(s)
                     tc.edgeList.remove(t)
@@ -49,15 +75,15 @@ def plot(thompsonsConstructor):
         edgeLabels[(s.from_state, s.to_state)] = s.label
         #G.add_edge(s.from_state, s.to_state, node_color = 'blue')
 
-    # states with an in degree > 0
-    inDegreeSet = set()
-    for s in stateSet:
-        inDegreeSet.add(s.e1)
-        inDegreeSet.add(s.e2)
+    ## states with an in degree > 0
+    #inDegreeSet = set()
+    #for s in stateSet:
+    #    inDegreeSet.add(s.e1)
+    #    inDegreeSet.add(s.e2)
 
-    for s in stateSet:
-        if s not in inDegreeSet:
-            s.stateNumber = -1
+    #for s in stateSet:
+    #    if s not in inDegreeSet:
+    #        s.stateNumber = -1
 
 
     G.add_nodes_from(stateSet)
@@ -65,20 +91,26 @@ def plot(thompsonsConstructor):
     for g in G:
         if g.e1 is None and g.e2 is None:
             colorMap.append('green')
-        if g.stateNumber == -1:
+        if str(g) == 'I':
             colorMap.append('orange')
         else: colorMap.append('blue')
 
     for s in tc.edgeList:
         G.add_edge(s.from_state, s.to_state, node_color = 'blue')
 
-    pos = nx.fruchterman_reingold_layout(G, 2)
+    pos = nx.fruchterman_reingold_layout(G)
     nx.draw_networkx_edge_labels(G, pos, edge_labels = edgeLabels, node_color = colorMap)
-    nx.draw(G, pos, node_color = colorMap, with_labels = True)
-    #nx.draw(G, pos, node_color = colorMap)
+    #nx.draw(G, pos, node_color = colorMap, with_labels = True)
+    nx.draw(G, pos, node_color = colorMap)
 
     plt.style.use(['dark_background'])
 
     #plt.axis('off')
     plt.axes().patch.set_facecolor('black')
     plt.show()
+
+def getInitialState(stateSet):
+    inDegreeSet = set()
+    for s in stateSet:
+        inDegreeSet.add(s.e1)
+        inDegreeSet.add(s.e2)

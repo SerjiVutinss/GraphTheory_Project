@@ -10,7 +10,7 @@ def match(infix, string):
     tc = ThompsonsConstructor(postfix)
     nfa = tc.solutionNfa
 
-    #plotter.plot(tc)
+    plotter.plot(tc)
 
 	# set of current and next states
     currentStates = set()
