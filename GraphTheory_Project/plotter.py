@@ -1,33 +1,6 @@
-from models import State, Nfa, Edge
-
 import matplotlib.pyplot as plt
 import networkx as nx
-
-def testPlot():
-    G = nx.DiGraph()
-
-    positions = {}
-
-    n0 = G.add_node(0)
-    n1 = G.add_node(1)
-    n2 = G.add_node(2)
-    n3 = G.add_node(3)
-
-    edgeLabels = {}
-
-
-    nx.draw(G)
-
-    #nx.draw_networkx_edge_labels(G, pos, edge_labels = edgeLabels, node_color
-    #= colorMap)
-    nx.draw(G, with_labels = True)
-    ##nx.draw(G, pos, node_color = colorMap)
-
-    #plt.style.use(['dark_background'])
-
-    #plt.axis('off')
-    #plt.axes().patch.set_facecolor('black')
-    plt.show()
+from models import State, Nfa, Edge
 
 def plot(thompsonsConstructor):
     """

@@ -19,7 +19,7 @@ class Result:
 
     def printResult(self):
         displayString = ''
-        if(self.string == ''):
+        if(self.string == '' or self.string == None):
             displayString = "{Empty}"
         else:
             displayString = self.string

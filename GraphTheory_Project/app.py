@@ -1,6 +1,5 @@
 from algorithms import regex_matcher as re_matcher
 from plotter import plot
-import plotter
 
 import utils
 
@@ -15,6 +14,7 @@ def menuLoop():
         print "Please make a selection:"
         print "\t1) Manually input a reg-ex and string to be matched"
         print "\t2) Run test suite of strings and infixes"
+        print "\t9) Load strings and infixes from sample files"
         print  "\tq)uit"
         selection = raw_input('Please choose: ')
 
@@ -25,7 +25,9 @@ def menuLoop():
             print "You selected 2"
             infixes = ["1.0.1*", "a.((b.c)|b)*", "a.(b.b)*.c"]
             strings = ["", "101", "abbc", "abcc", "abad", "abbbc"]
-            runMatchAllTest(infixes, strings)
+            results = matchMany(infixes, strings)
+            displayResults(results)
+            plotResults(results)
 
         elif(selection == '8'):
             print "You selected 8"
@@ -45,7 +47,9 @@ def testFileReader():
     infixes = utils.fr.readLinesToList("infixes.txt")
     strings = utils.fr.readLinesToList("strings.txt")
 
-    runMatchAllTest(infixes, strings)
+    results = matchMany(infixes, strings)
+    #displayResults(results)
+    plotResults(results)
 
 def runMatchOneTest():
     infix = "(a.(b|d))*"
@@ -53,26 +57,28 @@ def runMatchOneTest():
     print re_matcher.match(infix, stringToMatch), infix, stringToMatch
 
     
-def runMatchAllTest(infix_list, string_list):
-
-    #strings = ["a.b.c*", "a.(b|d).c*", "(a.(b|d))*", "a.(b.b)*.c"]
-
+def matchMany(infix_list, string_list):
+    """Generate Results for a list of strings against a list of infixes"""
     result_list = list()
+    # process all infixes and strings then add to list
     for i in infix_list:
         for s in string_list:
-            # NOTE: match() returns an array of the form
-            # [string, infix, accepted, postfix]
+            # NOTE: returns a result object
             r = re_matcher.match(i, s)
-
             result_list.append(r)
+    return result_list
 
-    isPlotted = True
+def saveResultsToCsv(results_list):
+    utils.fr.writeToCsv(result_list)
+
+def plotResults(result_list):
+    for r in result_list:
+        plot(r.thompsonsConstruction)
+
+def displayResults(result_list):
+    """Displays a list of results to the console"""
     for r in result_list:
         r.printResult()
-        if(isPlotted):
-            plotter.plot(r.thompsonsConstruction)
-
-    utils.fr.writeToCsv(result_list)
 
 if __name__ == "__main__":
     main()

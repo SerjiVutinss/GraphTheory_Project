@@ -6,6 +6,7 @@ def readLinesToList(file_name):
     line_list = list()
     for s in file.readlines():
         line_list.append(s)
+    return line_list
 
 def writeToCsv(result_list):
 
