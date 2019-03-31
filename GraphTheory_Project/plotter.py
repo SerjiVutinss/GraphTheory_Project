@@ -78,8 +78,9 @@ def plot(thompsonsConstructor):
     for g in G:
         if g.e1 is None and g.e2 is None:
             colorMap.append('green')
-        if g == initialState:
-            colorMap.append('orange')
+        ## TODO: fix this, get correct initials
+        #if g == initialState:
+        #    colorMap.append('orange')
         else: colorMap.append('blue')
 
     # add all edges in edge list to the graph with a default colour
