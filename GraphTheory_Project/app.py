@@ -16,22 +16,27 @@ def appLoop():
         print "\t2) Run test suite of strings and infixes"
         print  "\tq)uit"
         selection = raw_input('Please choose: ')
+
         if(selection == '1'):
             print "You selected 1"
+
         elif(selection == '2'):
             print "You selected 2"
-            
             infixes = ["1.0.1*", "a.((b.c)|b)*", "a.(b.b)*.c"]
             strings = ["", "101", "abbc", "abcc", "abad", "abbbc"]
             runMatchAllTest(infixes, strings)
+
         elif(selection == '8'):
             print "You selected 8"
             plotter.testPlot()
+
         elif(selection == '9'):
             print "You selected 9"
             testFileReader()
+
         elif(selection == 'q'):
             keepRunning = False
+
         else:
             print "Invalid Selection, please try again"
 
@@ -61,8 +66,13 @@ def runMatchAllTest(infix_list, string_list):
             result_list.append(r)
 
     for r in result_list:
-        print r[0] + " in " + r[1] + " = " + str(r[2]) + " (postfix = " + r[3] + ")"
+        printResult(r)
+    utils.fr.writeToCsv(result_list)
 
+def printResult(r):
+    if(r[0] == ""):
+        r[0] = "Empty"
+    print r[0] + " in " + r[1] + " = " + str(r[2]) + " (postfix = " + r[3] + ")"
 
 if __name__ == "__main__":
     main()

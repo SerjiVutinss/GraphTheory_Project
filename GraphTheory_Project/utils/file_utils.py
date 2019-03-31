@@ -13,6 +13,6 @@ def writeToCsv(result_list):
         writer = csv.writer(csvfile, delimiter=';')
 
         for r in result_list:
-            writer.writerow(result_list[0], result_list[1], result_list[2])
+            writer.writerow(r)
 
 
