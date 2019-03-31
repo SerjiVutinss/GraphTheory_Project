@@ -32,7 +32,7 @@ def match(infix, string):
 	    # return state is in set of current
 	    # return state is in set of current
 
-    return (nfa.acceptState in currentStates)
+    return (string, infix, nfa.acceptState in currentStates, postfix)
 
 
 def followEedges(state):

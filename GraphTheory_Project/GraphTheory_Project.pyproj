@@ -59,6 +59,9 @@
     <Compile Include="samples_ian\__init__.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="utils\file_utils.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="utils\stack.py">
       <SubType>Code</SubType>
     </Compile>
