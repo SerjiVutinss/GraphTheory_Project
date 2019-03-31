@@ -1,4 +1,4 @@
-from models import State, Nfa, Edge
+from models import State, Nfa, Edge, Result
 from algorithms import ThompsonsConstructor, ShuntingYard
 
 import plotter
@@ -32,7 +32,9 @@ def match(infix, string):
 	    # return state is in set of current
 	    # return state is in set of current
 
-    return [string, infix, nfa.acceptState in currentStates, postfix]
+    #return [string, infix, nfa.acceptState in currentStates, postfix]
+    isAccepted = nfa.acceptState in currentStates
+    return Result(string, infix, isAccepted, postfix)
 
 
 def followEedges(state):

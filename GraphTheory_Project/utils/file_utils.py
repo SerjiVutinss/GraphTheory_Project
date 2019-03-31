@@ -13,6 +13,4 @@ def writeToCsv(result_list):
         writer = csv.writer(csvfile, delimiter=';')
 
         for r in result_list:
-            writer.writerow(r)
-
-
+            writer.writerow([r.string, r.infix, r.isAccepted, r.postfix])

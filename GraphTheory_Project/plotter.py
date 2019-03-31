@@ -99,14 +99,11 @@ def plot(thompsonsConstructor):
         G.add_edge(s.from_state, s.to_state, node_color = 'blue')
 
     pos = nx.fruchterman_reingold_layout(G)
+    # draw the edge labels
     nx.draw_networkx_edge_labels(G, pos, edge_labels = edgeLabels, node_color = colorMap)
-    #nx.draw(G, pos, node_color = colorMap, with_labels = True)
+    # draw the chart
     nx.draw(G, pos, node_color = colorMap)
-
-    plt.style.use(['dark_background'])
-
-    #plt.axis('off')
-    plt.axes().patch.set_facecolor('black')
+    # show the matplotlib plot
     plt.show()
 
 def getInitialState(stateSet):

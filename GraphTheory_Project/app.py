@@ -6,9 +6,9 @@ import utils
 def main():
     print "Starting..."
     #runMatchTest()
-    appLoop()
+    menuLoop()
 
-def appLoop():
+def menuLoop():
     keepRunning = True
     while(keepRunning):
         print "Please make a selection:"
@@ -66,13 +66,8 @@ def runMatchAllTest(infix_list, string_list):
             result_list.append(r)
 
     for r in result_list:
-        printResult(r)
+        r.printResult()
     utils.fr.writeToCsv(result_list)
-
-def printResult(r):
-    if(r[0] == ""):
-        r[0] = "Empty"
-    print r[0] + " in " + r[1] + " = " + str(r[2]) + " (postfix = " + r[3] + ")"
 
 if __name__ == "__main__":
     main()
