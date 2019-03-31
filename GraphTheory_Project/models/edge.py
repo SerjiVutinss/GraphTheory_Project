@@ -1,10 +1,14 @@
 class Edge:
-
+    """
+        Class used to represent an edges or connection between two states within the NFA
+        Currently only used for chart plotting but edges are built suring thompson's construction
+    """
     from_state = None
     to_state = None
     label = None
     isAccept = None
 
+    # crude implementation of hash
     def __hash__(self):
         return id((hash(self.from_state) * 2) + (hash(self.to_state) * 3))
 

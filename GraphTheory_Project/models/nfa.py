@@ -1,5 +1,7 @@
 class Nfa:
-
+    """
+        An NFA which is built using Thompson's Construction
+    """
     initialState = None
     acceptState = None
 
