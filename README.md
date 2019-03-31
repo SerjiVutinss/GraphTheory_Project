@@ -32,7 +32,7 @@ This repo contains a sample file of infixes and a sample file of strings (infixe
 
 The plotting of graphs and writing results to a CSV file can be toggled on or off and these are both off by default.
 
-Enabling the 'Toggle write to CSV file for result set' option, the user will be prompted for the output file path which can be left empty but wll result in an error.  Once set, the output file name will not change until Write To CSV is explicitly disabled and re-enabled by the user. 
+Enabling the 'Toggle write to CSV file for result set' option, the user will be prompted for the output file path which can not be left empty.  Once set, the output file name will not change until 'Write To CSV' is explicitly disabled and re-enabled by the user. 
 
 1. Manually enter an infix and a string to match against it
     * Infix can not be an empty
