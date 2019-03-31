@@ -8,10 +8,10 @@ def readLinesToList(file_name):
         line_list.append(s)
     return line_list
 
-def writeToCsv(result_list):
+def writeToCsv(result_list, file_name):
 
-    with open('results.csv', 'wb') as csvfile:
-        writer = csv.writer(csvfile, delimiter=';')
+    with open(file_name, 'wb') as csvfile:
+        writer = csv.writer(csvfile, delimiter=',')
 
         for r in result_list:
             writer.writerow([r.string, r.infix, r.isAccepted, r.postfix])

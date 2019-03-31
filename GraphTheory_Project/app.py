@@ -45,7 +45,7 @@ def menuLoop():
                 if len(string) == 0:
                     string = ""
                 results = matchMany([infix], [string])
-                processResults(results, isPlotting, isWriteToFile)
+                processResults(results, isPlotting, isWriteToFile, output_file_name)
 
         elif(selection == '2'):
             print "You selected 2 - Specify a file containing infixes and a file containing strings"
@@ -57,7 +57,7 @@ def menuLoop():
                 strings = utils.fr.readLinesToList(string_file_name)
 
                 results = matchMany(infixes, strings)
-                processResults(results, isPlotting, isWriteToFile)
+                processResults(results, isPlotting, isWriteToFile, output_file_name)
             else:
                 print "Neither Infix filename nor String filename can be empty!"
 
@@ -66,7 +66,7 @@ def menuLoop():
             infixes = ["a*", "a.b.c*", "a.((b.c)|b)*", "a.(b.b)*.c"]
             strings = ["", "abc", "abbc", "abcc", "abad", "abbbc"]
             results = matchMany(infixes, strings)
-            processResults(results, isPlotting, isWriteToFile)
+            processResults(results, isPlotting, isWriteToFile, output_file_name)
 
 
         # Options
@@ -104,17 +104,17 @@ def matchMany(infix_list, string_list):
             result_list.append(r)
     return result_list
 
-def processResults(result_list, isPlotting, isWriteToFile):
+def processResults(result_list, isPlotting, isWriteToFile, output_file_name):
     """Decide what to do with the results based on the menu options toggled"""
     displayResults(result_list)
     if(isPlotting):
         plotResults(result_list)
     if(isWriteToFile):
-        saveResultsToCsv(result_list)
+        saveResultsToCsv(result_list, output_file_name)
 
-def saveResultsToCsv(result_list):
+def saveResultsToCsv(result_list, output_file_name):
     """Output the results to a CSV file"""
-    utils.fr.writeToCsv(result_list)
+    utils.fr.writeToCsv(result_list, output_file_name)
 
 def plotResults(result_list):
     """Creates a chart for each result"""
