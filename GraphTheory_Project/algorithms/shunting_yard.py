@@ -3,67 +3,51 @@ from utils import Stack
 
 # Adapted from code by Ian McLoughlin -
 # https://web.microsoftstream.com/video/cfc9f4a2-d34f-4cde-afba-063797493a90
-
 class ShuntingYard:
 
     @staticmethod
     def shunt(infix):
-
+        """
+            Function to convert an infix string into a postfix string
+            @param infix - the infix string which will be converted to postfix
+            @returns postfix - the postfix string generated from the infix paramater
+        """
         specials = {'*': 50, '.': 40, '|': 30}
 
         postfix = "" # output string
-        #stack = "" # stack for unused characters?
-        stack = Stack()
+        stack = Stack() # main data structure used in the algorithm
 
         # loop through infix string
         for c in infix:
             if c == '(':
                 # found an open bracket, push to stack
-                #stack = stack + c
                 stack.push(c)
-            elif c == ')':
+            elif c == ')': # note that this character never gets pushed to stack
                 # loop until an open bracket is found on stack
-                #while stack[-1] != '(':
                 while stack.peek() != '(':
-                    # concatenate the next character on the stack
-                    # to the return string
-                    #postfix = postfix + stack[-1]
-                    postfix = postfix +  stack.pop()
-                    # remove the character from the stack
-                    #stack = stack[:-1]
-                    #stack.pop()
-                # remove the bracket from the stack
-                #stack = stack[:-1]
+                    # pop next character from stack and append to postfix
+                    postfix = postfix + stack.pop()
+                # opening bracket was found on stack, remove and discard
                 stack.pop()
 
             elif c in specials:
-
-			    # NB
-                #while stack and specials.get(c, 0) <= specials.get(stack[-1], 0):
-
+                # while the stack is not empty and the special character has a
+                # precedence less than or equal to that of the next character
+                # on the stack
                 while stack.isEmpty() != True and specials.get(c, 0) <= specials.get(stack.peek(), 0):
-			    # get the special character from the dict
-			    # concatenate the next character on the stack
-			    # to the return string
+			        # pop next character from stack and append to postfix
                     postfix = postfix + stack.pop()
-				    # remove the character from the stack
-                    #stack = stack[:-1]
-                    #stack.pop()
-                #stack = stack + c
+                # and push the character to the stack
                 stack.push(c)
 
             else:
-                # just concatenate to string
+                # just concatenate character to postfix string
                 postfix = postfix + c
-                # loop until stack is empty
+        
+        # loop until stack is empty
         while stack.isEmpty() != True:
-            # concatenate the next character on the stack
-            # to the return string
-            #postfix = postfix + stack[-1]
-            postfix  = postfix + stack.pop()
-            # remove the character from the stack
-            #stack = stack[:-1]
-            #stack.pop()
+            # pop next character from stack and append to postfix
+            postfix = postfix + stack.pop()
 
-        print (infix, postfix)
+        # return the postfix string
         return postfix

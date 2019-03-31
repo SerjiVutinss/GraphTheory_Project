@@ -1,5 +1,7 @@
 class Result:
-
+    """
+        Class which represents a Result of comparing a string against a reg-ex
+    """
     string = None
     infix = None
     postfix = None
